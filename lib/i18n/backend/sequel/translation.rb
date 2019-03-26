@@ -81,7 +81,7 @@ module I18n
             end
 
             namespace = "#{keys.last}#{I18n::Backend::Flatten::FLATTEN_SEPARATOR}%"
-            where(key: keys).or(::Sequel.like(:key, namespace))
+            where{(key =~ keys) | (::Sequel.like(:key, namespace))}
           end
 
           def available_locales
